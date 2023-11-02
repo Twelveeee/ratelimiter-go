@@ -14,6 +14,20 @@ local function main()
         return
     end
 
+    -- key 请求参数不包含 caller 直接返回错误 JSON
+    if limit_key.caller == "" then
+        ngx.header["Content-Type"] = "application/json"
+        ngx.status = ngx.HTTP_FORBIDDEN
+        local args = utils.get_req_args() or {}
+        local rsp = {
+            seqId = args["seqId"],
+            code = ngx.HTTP_FORBIDDEN,
+            msg = "请求参数异常",
+        }
+        ngx.say(json.encode(rsp))
+        ngx.exit(ngx.HTTP_FORBIDDEN)
+    end
+
     -- key 在黑名单中直接返回错误 JSON
     if limit_key:is_in_blacklist() then
         ngx.header["Content-Type"] = "application/json"
