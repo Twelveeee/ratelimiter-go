@@ -4,4 +4,5 @@ local _M = {}
 
 -- 示例：将需要拉黑的 key ratelimiter:gz:/_dev_api/blocked:axiaoxin:127.0.0.1 放入 table
 _M["ratelimiter:/blocked:1"] = 1
+_M["ratelimiter:/_dev_api/blocked:1"] = 1
 return _M
