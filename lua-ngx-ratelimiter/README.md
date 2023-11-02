@@ -1,6 +1,6 @@
 # lua-ngx-ratelimiter (nginx + lua + redis + token bucket) 请求限流
 
-根据 `host 前缀 + 接口 URI + 请求来源 IP + 请求参数` 进行限流
+根据 `接口 URI + 请求参数caller` 进行限流
 
 ## 业务流程：
 
