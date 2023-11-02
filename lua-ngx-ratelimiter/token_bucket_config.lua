@@ -3,8 +3,8 @@ local _M = {}
 
 -- 默认的桶配置
 _M['default'] = {
-    fill_count = 500,                    -- 令牌桶每次填充数
-    interval_microsecond = 1000000,      -- 每次填充间隔时间（微秒）
+    fill_count = 1,                      -- 令牌桶每次填充数
+    interval_microsecond = 100000000,    -- 每次填充间隔时间（微秒）
     bucket_capacity = 500,               -- 令牌桶容量（最大限流值/秒）
     expire_second = 60 * 10,             -- 过期时间
 }
