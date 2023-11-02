@@ -46,25 +46,25 @@
 ```
 # 普通正常 post 请求，不在 limited_api_config 中，不会触发限频逻辑
 # 正常返回 hello world
-curl -H "host:gz.qq.com" http://localhost:8080/_dev_api -H "content-type:application/json" -d '{"seqId": "xx-xx-xx", "caller":"_dev_ashin"}'
+curl http://localhost:8881/_dev_api  -d '{"seqId": "xx-xx-xx", "caller":"_dev_ashin"}'
 
 # 普通正常 get 请求，不在 limited_api_config 中，不会触发限频逻辑
 # 正常返回 hello world
-curl -H "host:gz.qq.com" "http://localhost:8080/_dev_api?seqId=xx-xx-xx&caller=_dev_ashin"
+curl "http://localhost:8881/_dev_api?seqId=xx-xx-xx&caller=_dev_ashin"
 
-# 请求生成的 key 触发黑名单 (key 对应 blocked_keys_config 中的 `ratelimiter:gz:/api/blocked:axiaoxin:127.0.0.1`)
+# 请求生成的 key 触发黑名单 (key 对应 blocked_keys_config 中的 `ratelimiter:/_dev_api/blocked:1`)
 # 返回对应的错误 json
-curl -H "host:gz.qq.com" http://localhost:8080/_dev_api/blocked -H "content-type:application/json" -d '{"seqId": "xx-xx-xx", "caller":"_dev_axiaoxin"}'
+curl http://localhost:8881/_dev_api/blocked -d '{"seqId": "xx-xx-xx", "caller":"1"}'
 
 # 请求的 uri 匹配 limited_api_config 中的 `/_dev_api/limited` 触发限频逻辑
 # caller 和 uri 不匹配 token_bucket_config 中的配置，应该采用 default 配置
-curl -H "host:gz.qq.com" http://localhost:8080/_dev_api/limited -H "content-type:application/json" -d '{"seqId": "xx-xx-xx", "caller":"mayday"}'
+curl http://localhost:8881/_dev_api/limited  -d '{"seqId": "xx-xx-xx", "caller":"mayday"}'
 # 触发特殊限流配置 每秒只能访问一次 快速手动执行可以触发限频 返回对应的错误 json
-curl -H "host:gz.qq.com" http://localhost:8080/_dev_api/limited -H "content-type:application/json" -d '{"seqId": "xx-xx-xx", "caller":"_dev_ashin"}'
+curl http://localhost:8881/_dev_api/limited -d '{"seqId": "xx-xx-xx", "caller":"_dev_ashin"}'
 
 # 请求参数 caller 触发白名单 （ caller 对应 caller_whitelist_config 中的 _dev_whitelist ），即使是请求限流接口也不会触发限频逻辑
 # 正常返回 hello world
-curl -H "host:gz.qq.com" http://localhost:8080/_dev_api/limited -H "content-type:application/json" -d '{"seqId": "xx-xx-xx", "caller":"_dev_whitelist"}'
+curl http://localhost:8881/_dev_api/limited -d '{"seqId": "xx-xx-xx", "caller":"_dev_whitelist"}'
 ```
 
 
