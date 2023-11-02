@@ -38,7 +38,8 @@ function _M:new()
     o.api_name = api_name
     o.caller = caller
     o.client_ip = client_ip
-    o.key = o.prefix .. o.separator .. host .. o.separator .. api_name .. o.separator .. caller .. o.separator .. client_ip
+    o.key = o.prefix .. o.separator .. api_name .. o.separator .. caller
+    -- ratelimiter:localhost:/_dev_api/limited::127.0.0.1    
     ngx.log(ngx.INFO, "ratelimiter: gen a new limit key -> " .. o.key)
 	return o
 end
